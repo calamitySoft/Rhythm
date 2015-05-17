@@ -8,10 +8,6 @@
 
 #import "ViewController.h"
 
-const UIViewAutoresizing UIViewAutoresizingCenterHorizontally = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-const UIViewAutoresizing UIViewAutoresizingCenterVertically = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-const UIViewAutoresizing UIViewAutoresizingResize = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-
 @interface ViewController () <UIGestureRecognizerDelegate>
 @property IBOutlet UILabel *attackLabel; // scissors
 @property IBOutlet UILabel *blockLabel;  // rock
@@ -21,33 +17,44 @@ const UIViewAutoresizing UIViewAutoresizingResize = UIViewAutoresizingFlexibleWi
 
 @implementation ViewController
 
++ (UIColor *)highlightColor {
+    return [UIColor colorWithRed:(54/255.) green:(109/255.) blue:(191/255.) alpha:1];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.pulseView.layer.cornerRadius = CGRectGetWidth(self.pulseView.frame) / 2;
 }
 
+#pragma mark - Actions
+
 - (void)attack {
-    
+    self.attackLabel.backgroundColor = [[self class] highlightColor];
+    [self.attackLabel performSelector:@selector(setBackgroundColor:) withObject:[UIColor clearColor] afterDelay:0.25];
 }
 
 - (void)block {
-    
+    self.blockLabel.backgroundColor = [[self class] highlightColor];
+    [self.blockLabel performSelector:@selector(setBackgroundColor:) withObject:[UIColor clearColor] afterDelay:0.25];
 }
 
 - (void)throw {
-    
+    self.throwLabel.backgroundColor = [[self class] highlightColor];
+    [self.throwLabel performSelector:@selector(setBackgroundColor:) withObject:[UIColor clearColor] afterDelay:0.25];
 }
 
+#pragma mark - Gestures
+
 - (IBAction)gestureRecognizerDidSwipeUp:(UISwipeGestureRecognizer *)recognizer {
-    NSLog(@"%s", __func__);
+    [self attack];
 }
 
 - (IBAction)gestureRecognizerDidSwipeDown:(UISwipeGestureRecognizer *)recognizer {
-    NSLog(@"%s", __func__);
+    [self block];
 }
 
 - (IBAction)gestureRecognizerDidSwipeLeft:(UISwipeGestureRecognizer *)recognizer {
-    NSLog(@"%s", __func__);
+    [self throw];
 }
 
 - (IBAction)gestureRecognizerDidSwipeRight:(UISwipeGestureRecognizer *)recognizer {
