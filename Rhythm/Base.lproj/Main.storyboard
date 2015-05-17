@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YLU-pj-9YK">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YLU-pj-9YK" userLabel="Pulse View">
                                 <rect key="frame" x="278" y="278" width="44" height="44"/>
                                 <color key="backgroundColor" red="0.210659086" green="0.42634746080000002" blue="0.75" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -44,6 +44,7 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="YLU-pj-9YK" firstAttribute="leading" secondItem="UfP-RN-vSa" secondAttribute="trailing" constant="73" id="00K-LQ-U1X"/>
                             <constraint firstAttribute="centerX" secondItem="YLU-pj-9YK" secondAttribute="centerX" id="5p9-lG-kgZ"/>
@@ -54,6 +55,12 @@
                             <constraint firstItem="YLU-pj-9YK" firstAttribute="top" secondItem="E3Q-PL-F69" secondAttribute="bottom" constant="55" id="eWB-f6-rp0"/>
                             <constraint firstItem="YLU-pj-9YK" firstAttribute="centerX" secondItem="4cJ-as-spK" secondAttribute="centerX" id="zqz-1E-hbt"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="kk0-gT-aVl" appends="YES" id="HjT-yh-Kcy"/>
+                            <outletCollection property="gestureRecognizers" destination="I6l-w1-dZS" appends="YES" id="g08-OA-o2q"/>
+                            <outletCollection property="gestureRecognizers" destination="ZR4-fl-EeZ" appends="YES" id="UMf-Bb-b3A"/>
+                            <outletCollection property="gestureRecognizers" destination="5UC-n7-bww" appends="YES" id="Ghx-g2-HCj"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="attackLabel" destination="E3Q-PL-F69" id="LDv-NE-DKO"/>
@@ -63,6 +70,26 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer delaysTouchesEnded="NO" direction="up" id="kk0-gT-aVl">
+                    <connections>
+                        <action selector="gestureRecognizerDidSwipeUp:" destination="BYZ-38-t0r" id="QfX-Lg-5CN"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="down" id="I6l-w1-dZS">
+                    <connections>
+                        <action selector="gestureRecognizerDidSwipeDown:" destination="BYZ-38-t0r" id="gEk-hx-tbl"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="ZR4-fl-EeZ">
+                    <connections>
+                        <action selector="gestureRecognizerDidSwipeLeft:" destination="BYZ-38-t0r" id="uiE-Nz-hep"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="5UC-n7-bww">
+                    <connections>
+                        <action selector="gestureRecognizerDidSwipeRight:" destination="BYZ-38-t0r" id="d9O-w4-7IS"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
         </scene>
     </scenes>

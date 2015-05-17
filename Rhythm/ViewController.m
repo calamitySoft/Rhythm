@@ -12,7 +12,7 @@ const UIViewAutoresizing UIViewAutoresizingCenterHorizontally = UIViewAutoresizi
 const UIViewAutoresizing UIViewAutoresizingCenterVertically = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 const UIViewAutoresizing UIViewAutoresizingResize = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
-@interface ViewController ()
+@interface ViewController () <UIGestureRecognizerDelegate>
 @property IBOutlet UILabel *attackLabel; // scissors
 @property IBOutlet UILabel *blockLabel;  // rock
 @property IBOutlet UILabel *throwLabel;  // paper
@@ -36,6 +36,22 @@ const UIViewAutoresizing UIViewAutoresizingResize = UIViewAutoresizingFlexibleWi
 
 - (void)throw {
     
+}
+
+- (IBAction)gestureRecognizerDidSwipeUp:(UISwipeGestureRecognizer *)recognizer {
+    NSLog(@"%s", __func__);
+}
+
+- (IBAction)gestureRecognizerDidSwipeDown:(UISwipeGestureRecognizer *)recognizer {
+    NSLog(@"%s", __func__);
+}
+
+- (IBAction)gestureRecognizerDidSwipeLeft:(UISwipeGestureRecognizer *)recognizer {
+    NSLog(@"%s", __func__);
+}
+
+- (IBAction)gestureRecognizerDidSwipeRight:(UISwipeGestureRecognizer *)recognizer {
+    NSLog(@"%s", __func__);
 }
 
 @end
