@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		70351F7C1B08F14000D27836 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70351F7B1B08F14000D27836 /* Images.xcassets */; };
+		70351F7E1B08F15E00D27836 /* Click1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70351F7D1B08F15E00D27836 /* Click1.wav */; };
 		70DFD0C71B08E6A70084175E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DFD0C61B08E6A70084175E /* main.m */; };
 		70DFD0CA1B08E6A70084175E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DFD0C91B08E6A70084175E /* AppDelegate.m */; };
 		70DFD0CD1B08E6A70084175E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DFD0CC1B08E6A70084175E /* ViewController.m */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		70351F7B1B08F14000D27836 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		70351F7D1B08F15E00D27836 /* Click1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Click1.wav; sourceTree = "<group>"; };
 		70DFD0C11B08E6A70084175E /* Rhythm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rhythm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70DFD0C51B08E6A70084175E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		70DFD0C61B08E6A70084175E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 		70351F7A1B08F14000D27836 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				70351F7D1B08F15E00D27836 /* Click1.wav */,
 				70351F7B1B08F14000D27836 /* Images.xcassets */,
 			);
 			path = Resources;
@@ -208,6 +211,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70351F7C1B08F14000D27836 /* Images.xcassets in Resources */,
+				70351F7E1B08F15E00D27836 /* Click1.wav in Resources */,
 				70DFD0D01B08E6A70084175E /* Main.storyboard in Resources */,
 				70DFD0D51B08E6A70084175E /* LaunchScreen.xib in Resources */,
 			);
