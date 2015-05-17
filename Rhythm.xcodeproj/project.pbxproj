@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		70351F7C1B08F14000D27836 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70351F7B1B08F14000D27836 /* Images.xcassets */; };
 		70DFD0C71B08E6A70084175E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DFD0C61B08E6A70084175E /* main.m */; };
 		70DFD0CA1B08E6A70084175E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DFD0C91B08E6A70084175E /* AppDelegate.m */; };
 		70DFD0CD1B08E6A70084175E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DFD0CC1B08E6A70084175E /* ViewController.m */; };
 		70DFD0D01B08E6A70084175E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70DFD0CE1B08E6A70084175E /* Main.storyboard */; };
-		70DFD0D21B08E6A70084175E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70DFD0D11B08E6A70084175E /* Images.xcassets */; };
 		70DFD0D51B08E6A70084175E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70DFD0D31B08E6A70084175E /* LaunchScreen.xib */; };
 		70DFD0E11B08E6A70084175E /* RhythmTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DFD0E01B08E6A70084175E /* RhythmTests.m */; };
 /* End PBXBuildFile section */
@@ -27,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		70351F7B1B08F14000D27836 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		70DFD0C11B08E6A70084175E /* Rhythm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rhythm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70DFD0C51B08E6A70084175E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		70DFD0C61B08E6A70084175E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -35,7 +36,6 @@
 		70DFD0CB1B08E6A70084175E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		70DFD0CC1B08E6A70084175E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		70DFD0CF1B08E6A70084175E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		70DFD0D11B08E6A70084175E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		70DFD0D41B08E6A70084175E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		70DFD0DA1B08E6A70084175E /* RhythmTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RhythmTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		70DFD0DF1B08E6A70084175E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -60,6 +60,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		70351F7A1B08F14000D27836 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				70351F7B1B08F14000D27836 /* Images.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		70DFD0B81B08E6A70084175E = {
 			isa = PBXGroup;
 			children = (
@@ -86,8 +94,8 @@
 				70DFD0CB1B08E6A70084175E /* ViewController.h */,
 				70DFD0CC1B08E6A70084175E /* ViewController.m */,
 				70DFD0CE1B08E6A70084175E /* Main.storyboard */,
-				70DFD0D11B08E6A70084175E /* Images.xcassets */,
 				70DFD0D31B08E6A70084175E /* LaunchScreen.xib */,
+				70351F7A1B08F14000D27836 /* Resources */,
 				70DFD0C41B08E6A70084175E /* Supporting Files */,
 			);
 			path = Rhythm;
@@ -199,9 +207,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70351F7C1B08F14000D27836 /* Images.xcassets in Resources */,
 				70DFD0D01B08E6A70084175E /* Main.storyboard in Resources */,
 				70DFD0D51B08E6A70084175E /* LaunchScreen.xib in Resources */,
-				70DFD0D21B08E6A70084175E /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +422,7 @@
 				70DFD0E61B08E6A70084175E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		70DFD0E71B08E6A70084175E /* Build configuration list for PBXNativeTarget "RhythmTests" */ = {
 			isa = XCConfigurationList;
@@ -422,6 +431,7 @@
 				70DFD0E91B08E6A70084175E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
