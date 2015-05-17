@@ -15,6 +15,7 @@
 		70DFD0D01B08E6A70084175E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70DFD0CE1B08E6A70084175E /* Main.storyboard */; };
 		70DFD0D51B08E6A70084175E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70DFD0D31B08E6A70084175E /* LaunchScreen.xib */; };
 		70DFD0E11B08E6A70084175E /* RhythmTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DFD0E01B08E6A70084175E /* RhythmTests.m */; };
+		70F370271B08FBA200273D20 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F370261B08FBA200273D20 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		70DFD0DA1B08E6A70084175E /* RhythmTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RhythmTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		70DFD0DF1B08E6A70084175E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		70DFD0E01B08E6A70084175E /* RhythmTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RhythmTests.m; sourceTree = "<group>"; };
+		70F370261B08FBA200273D20 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70F370271B08FBA200273D20 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +77,7 @@
 		70DFD0B81B08E6A70084175E = {
 			isa = PBXGroup;
 			children = (
+				70F370261B08FBA200273D20 /* AVFoundation.framework */,
 				70DFD0C31B08E6A70084175E /* Rhythm */,
 				70DFD0DD1B08E6A70084175E /* RhythmTests */,
 				70DFD0C21B08E6A70084175E /* Products */,

@@ -7,12 +7,15 @@
 //
 
 #import "ViewController.h"
+@import AVFoundation;
 
 @interface ViewController () <UIGestureRecognizerDelegate>
 @property IBOutlet UILabel *attackLabel; // scissors
 @property IBOutlet UILabel *blockLabel;  // rock
 @property IBOutlet UILabel *throwLabel;  // paper
 @property IBOutlet UIView *pulseView;
+@property AVAudioPlayer *clickAudioPlayer;
+@property NSTimer *clickTimer;
 @end
 
 @implementation ViewController
@@ -21,10 +24,26 @@
     return [UIColor colorWithRed:(54/255.) green:(109/255.) blue:(191/255.) alpha:1];
 }
 
++ (AVAudioPlayer *)clickAudioPlayer {
+    NSURL *clickURL = [[NSBundle mainBundle] URLForResource:@"Click1" withExtension:@"wav"];
+    return [[AVAudioPlayer alloc] initWithContentsOfURL:clickURL fileTypeHint:AVFileTypeWAVE error:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.pulseView.backgroundColor = [[self class] highlightColor];
+    self.pulseView.backgroundColor = [UIColor clearColor];
     self.pulseView.layer.cornerRadius = CGRectGetWidth(self.pulseView.frame) / 2;
+    self.clickTimer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(click:) userInfo:nil repeats:YES];
+    self.clickAudioPlayer = [[self class] clickAudioPlayer];
+    [self.clickAudioPlayer prepareToPlay];
+}
+
+#pragma mark - Click
+
+- (void)click:(NSTimer *)timer {
+    [self.clickAudioPlayer play];
+    self.pulseView.backgroundColor = [[self class] highlightColor];
+    [self.pulseView performSelector:@selector(setBackgroundColor:) withObject:[UIColor clearColor] afterDelay:0.1];
 }
 
 #pragma mark - Actions
