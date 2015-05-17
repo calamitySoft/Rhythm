@@ -23,6 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.pulseView.backgroundColor = [[self class] highlightColor];
     self.pulseView.layer.cornerRadius = CGRectGetWidth(self.pulseView.frame) / 2;
 }
 
