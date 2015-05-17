@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,8 +15,52 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YLU-pj-9YK">
+                                <rect key="frame" x="278" y="278" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.210659086" green="0.42634746080000002" blue="0.75" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="Lqc-OO-hTU"/>
+                                    <constraint firstAttribute="height" constant="44" id="Y5M-y0-uwg"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="attack" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E3Q-PL-F69">
+                                <rect key="frame" x="257" y="184" width="87" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="throw" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UfP-RN-vSa">
+                                <rect key="frame" x="126" y="281" width="79" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="block" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4cJ-as-spK">
+                                <rect key="frame" x="262" y="377" width="77" height="39"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="YLU-pj-9YK" firstAttribute="leading" secondItem="UfP-RN-vSa" secondAttribute="trailing" constant="73" id="00K-LQ-U1X"/>
+                            <constraint firstAttribute="centerX" secondItem="YLU-pj-9YK" secondAttribute="centerX" id="5p9-lG-kgZ"/>
+                            <constraint firstItem="YLU-pj-9YK" firstAttribute="centerX" secondItem="E3Q-PL-F69" secondAttribute="centerX" id="AWF-KB-QZ8"/>
+                            <constraint firstItem="YLU-pj-9YK" firstAttribute="centerY" secondItem="UfP-RN-vSa" secondAttribute="centerY" id="LUM-kj-44T"/>
+                            <constraint firstAttribute="centerY" secondItem="YLU-pj-9YK" secondAttribute="centerY" id="NBw-B4-eVb"/>
+                            <constraint firstItem="4cJ-as-spK" firstAttribute="top" secondItem="YLU-pj-9YK" secondAttribute="bottom" constant="55" id="cQ6-SE-jLs"/>
+                            <constraint firstItem="YLU-pj-9YK" firstAttribute="top" secondItem="E3Q-PL-F69" secondAttribute="bottom" constant="55" id="eWB-f6-rp0"/>
+                            <constraint firstItem="YLU-pj-9YK" firstAttribute="centerX" secondItem="4cJ-as-spK" secondAttribute="centerX" id="zqz-1E-hbt"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="attackLabel" destination="E3Q-PL-F69" id="LDv-NE-DKO"/>
+                        <outlet property="blockLabel" destination="4cJ-as-spK" id="VM6-1O-l8H"/>
+                        <outlet property="pulseView" destination="YLU-pj-9YK" id="3Aj-Ym-Crl"/>
+                        <outlet property="throwLabel" destination="UfP-RN-vSa" id="JoR-ZC-YVm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

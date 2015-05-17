@@ -8,20 +8,34 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
+const UIViewAutoresizing UIViewAutoresizingCenterHorizontally = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+const UIViewAutoresizing UIViewAutoresizingCenterVertically = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+const UIViewAutoresizing UIViewAutoresizingResize = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
+@interface ViewController ()
+@property IBOutlet UILabel *attackLabel; // scissors
+@property IBOutlet UILabel *blockLabel;  // rock
+@property IBOutlet UILabel *throwLabel;  // paper
+@property IBOutlet UIView *pulseView;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    self.pulseView.layer.cornerRadius = CGRectGetWidth(self.pulseView.frame) / 2;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)attack {
+    
+}
+
+- (void)block {
+    
+}
+
+- (void)throw {
+    
 }
 
 @end
