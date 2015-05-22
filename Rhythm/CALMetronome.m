@@ -61,10 +61,11 @@
 
 - (void)tick:(CADisplayLink *)displayLink {
     self.actionAllowed = [self isActiveForTimestamp:displayLink.timestamp];
-    BOOL shouldFire = [self shouldFireForTimestamp:displayLink.timestamp];
-    if (shouldFire) {
-        self.lastFireTime = displayLink.timestamp;
+    BOOL shouldBeat = [self hasCurrentTimeOutgrownBeatPeriod:displayLink.timestamp];
+    if (shouldBeat) {
+        self.lastFireTime = [self beatTimestampPriorToTimestamp:displayLink.timestamp];
         self.nextFireTime = self.lastFireTime + self.secondsPerBeat;
+        NSLog(@"beat: %.5f", displayLink.timestamp);
         for (NSObject *listener in self.selectorsByListener) {
             [[self.selectorsByListener objectForKey:listener] invoke];
         }
@@ -81,26 +82,17 @@
     return leadsWithinLeniency || trailsWithinLeniency;
 }
 
-- (CFTimeInterval)fireTimeLessThan:(CFTimeInterval)timestamp {
-    return (floor(timestamp/self.secondsPerBeat) - 1) * self.secondsPerBeat;
+- (CFTimeInterval)beatTimestampPriorToTimestamp:(CFTimeInterval)timestamp {
+    CFTimeInterval timeSinceStart = timestamp - self.startTime;
+    CFTimeInterval beatsSinceStart = timeSinceStart / self.secondsPerBeat;
+    CFTimeInterval wholeBeatsSinceStart = floor( beatsSinceStart );
+    CFTimeInterval beatSecondsSinceStart = wholeBeatsSinceStart * self.secondsPerBeat;
+    return self.startTime + beatSecondsSinceStart;
 }
 
-- (CFTimeInterval)fireTimeGreaterThanOrEqualTo:(CFTimeInterval)timestamp {
-    return ceil(timestamp/self.secondsPerBeat) * self.secondsPerBeat;
-}
-
-- (CFTimeInterval)multipleOf {
-    return 0;
-}
-
-- (BOOL)shouldFireForTimestamp:(CFTimeInterval)timestamp {
+- (BOOL)hasCurrentTimeOutgrownBeatPeriod:(CFTimeInterval)timestamp {
     CFTimeInterval timeIntervalSinceLastBeat = timestamp - self.lastFireTime;
     return timeIntervalSinceLastBeat > self.secondsPerBeat;
-}
-
-- (BOOL)shouldSendBeatForDisplayLink:(CADisplayLink *)displayLink {
-    CFTimeInterval timeIntervalSinceStart = displayLink.timestamp - self.startTime;
-    return NO;
 }
 
 #pragma mark - Listeners

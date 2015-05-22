@@ -38,7 +38,7 @@
     self.pulseView.layer.cornerRadius = CGRectGetWidth(self.pulseView.frame) / 2;
     self.clickAudioPlayer = [[self class] clickAudioPlayer];
     [self.clickAudioPlayer prepareToPlay];
-    self.metronome = [[CALMetronome alloc] initWithBPM:20 leadingLeniency:0.5 trailingLeniency:0.5];
+    self.metronome = [[CALMetronome alloc] initWithBPM:60 leadingLeniency:0.25 trailingLeniency:0.25];
     [self.metronome addObserver:self forKeyPath:NSStringFromSelector(@selector(actionAllowed)) options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:0];
     [self.metronome addBeatListener:self selector:@selector(beat)];
 }
@@ -57,7 +57,7 @@
 
 - (void)beat {
     static NSInteger beat = 0;
-    NSLog(@"beat %ld", (long)beat++);
+//    NSLog(@"beat %ld", (long)beat++);
     [self.clickAudioPlayer play];
 }
 
