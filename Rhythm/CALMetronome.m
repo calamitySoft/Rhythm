@@ -10,7 +10,7 @@
 @import QuartzCore;
 
 @interface CALMetronome ()
-@property (readwrite) BOOL active;
+@property (readwrite) BOOL actionAllowed;
 @property CADisplayLink *displayLink;
 @property CFTimeInterval lastFireTime;
 @property CFTimeInterval nextFireTime;
@@ -22,7 +22,7 @@
 - (instancetype)initWithBPM:(float)bpm leadingLeniency:(NSTimeInterval)leadingLeniency trailingLeniency:(NSTimeInterval)trailingLeniency {
     self = [super init];
     if (self) {
-        _active = NO;
+        _actionAllowed = NO;
         _bpm = bpm;
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(tick:)];
         _leadingLeniency = leadingLeniency;
@@ -54,10 +54,10 @@
 }
 
 - (void)tick:(CADisplayLink *)displayLink {
-    self.active = [self isActiveForTimestamp:displayLink.timestamp];
+    self.actionAllowed = [self isActiveForTimestamp:displayLink.timestamp];
     self.lastFireTime = [self fireTimeLessThan:displayLink.timestamp];
     self.nextFireTime = [self fireTimeGreaterThanOrEqualTo:displayLink.timestamp];
-    NSLog(@"displayLink .timestamp = %f, .duration = %f, active == %d", displayLink.timestamp, displayLink.duration, self.active);
+    NSLog(@"displayLink .timestamp = %f, .duration = %f, active == %d", displayLink.timestamp, displayLink.duration, self.actionAllowed);
 }
 
 - (BOOL)isActiveForTimestamp:(CFTimeInterval)timestamp {

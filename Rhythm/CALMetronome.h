@@ -10,7 +10,7 @@
 
 @interface CALMetronome : NSObject
 
-@property (readonly) BOOL active; // KVO this
+@property (readonly) BOOL actionAllowed; // KVO this
 @property (readonly) float bpm;
 @property (readonly) NSTimeInterval leadingLeniency; // length of time before a beat that active == YES
 @property (readonly) NSTimeInterval trailingLeniency; // length of time after a beat that active == YES

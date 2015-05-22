@@ -39,7 +39,7 @@
     self.clickAudioPlayer = [[self class] clickAudioPlayer];
     [self.clickAudioPlayer prepareToPlay];
     self.metronome = [[CALMetronome alloc] initWithBPM:20 leadingLeniency:1.5 trailingLeniency:0.05];
-    [self.metronome addObserver:self forKeyPath:NSStringFromSelector(@selector(active)) options:NSKeyValueObservingOptionNew context:0];
+    [self.metronome addObserver:self forKeyPath:NSStringFromSelector(@selector(actionAllowed)) options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:0];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -48,9 +48,11 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    BOOL active = [change[NSKeyValueChangeNewKey] boolValue];
-    self.pulseView.backgroundColor = active ? [[self class] highlightColor] : nil;
-    [self.clickAudioPlayer play];
+    BOOL actionAllowed = [change[NSKeyValueChangeNewKey] boolValue];
+    self.pulseView.backgroundColor = actionAllowed ? [[self class] highlightColor] : nil;
+    if (actionAllowed) {
+        [self.clickAudioPlayer play];
+    }
 }
 
 #pragma mark - Click
