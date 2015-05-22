@@ -38,8 +38,9 @@
     self.pulseView.layer.cornerRadius = CGRectGetWidth(self.pulseView.frame) / 2;
     self.clickAudioPlayer = [[self class] clickAudioPlayer];
     [self.clickAudioPlayer prepareToPlay];
-    self.metronome = [[CALMetronome alloc] initWithBPM:20 leadingLeniency:1.5 trailingLeniency:0.05];
+    self.metronome = [[CALMetronome alloc] initWithBPM:20 leadingLeniency:0.5 trailingLeniency:0.5];
     [self.metronome addObserver:self forKeyPath:NSStringFromSelector(@selector(actionAllowed)) options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:0];
+    [self.metronome addBeatListener:self selector:@selector(beat)];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -50,12 +51,15 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     BOOL actionAllowed = [change[NSKeyValueChangeNewKey] boolValue];
     self.pulseView.backgroundColor = actionAllowed ? [[self class] highlightColor] : nil;
-    if (actionAllowed) {
-        [self.clickAudioPlayer play];
-    }
 }
 
 #pragma mark - Click
+
+- (void)beat {
+    static NSInteger beat = 0;
+    NSLog(@"beat %ld", (long)beat++);
+    [self.clickAudioPlayer play];
+}
 
 - (void)click:(NSTimer *)timer {
     [self.clickAudioPlayer play];

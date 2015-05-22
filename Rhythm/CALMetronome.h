@@ -12,11 +12,14 @@
 
 @property (readonly) BOOL actionAllowed; // KVO this
 @property (readonly) float bpm;
-@property (readonly) NSTimeInterval leadingLeniency; // length of time before a beat that active == YES
-@property (readonly) NSTimeInterval trailingLeniency; // length of time after a beat that active == YES
+@property (readonly) NSTimeInterval leadingLeniency; // length of time before a beat that actionAllowed == YES
+@property (readonly) NSTimeInterval trailingLeniency; // length of time after a beat that actionAllowed == YES
 @property (readonly, getter=isPaused) BOOL paused;
 
 - (instancetype)initWithBPM:(float)bpm leadingLeniency:(NSTimeInterval)leadingLeniency trailingLeniency:(NSTimeInterval)trailingLeniency NS_DESIGNATED_INITIALIZER;
+
+- (void)addBeatListener:(NSObject *)listener selector:(SEL)selector;
+- (void)removeBeatListener:(NSObject *)listener;
 
 - (void)start; // not thread-safe
 - (void)invalidate;
