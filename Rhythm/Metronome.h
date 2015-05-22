@@ -13,10 +13,11 @@
 @property (readonly) BOOL active; // KVO this
 @property (readonly) float bpm;
 @property (readonly) NSTimeInterval leniency; // length of time from a beat that active == YES
+@property (readonly, getter=isPaused) BOOL paused;
 
 - (instancetype)initWithBPM:(float)bpm leniency:(NSTimeInterval)leniency NS_DESIGNATED_INITIALIZER;
 
-- (void)start;
-- (void)stop;
+- (void)start; // not thread-safe
+- (void)invalidate;
 
 @end

@@ -7,10 +7,14 @@
 //
 
 #import "Metronome.h"
+@import QuartzCore;
 
 @interface Metronome ()
 @property (readwrite) BOOL active;
-@property NSTimer *timer;
+@property CADisplayLink *displayLink;
+@property CFTimeInterval lastFireTime;
+@property CFTimeInterval nextFireTime;
+@property CFTimeInterval secondsPerBeat;
 @end
 
 @implementation Metronome
@@ -20,25 +24,55 @@
     if (self) {
         _active = NO;
         _bpm = bpm;
+        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(tick:)];
         _leniency = leniency;
-        _timer = [NSTimer timerWithTimeInterval:bpm target:self selector:@selector(tick:) userInfo:nil repeats:YES];
+        _lastFireTime = 0;
+        _nextFireTime = 0;
+        _paused = YES;
+        CFTimeInterval beatsPerSecond = self.bpm / 60.;
+        _secondsPerBeat = 1. / beatsPerSecond;
     }
     return self;
 }
 
+- (void)dealloc {
+    [self invalidate];
+}
+
 - (void)start {
-    if (!self.timer.isValid) {
-        [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
+    if (self.paused) {
+        _paused = NO;
+        [self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+        self.lastFireTime = CACurrentMediaTime();
+        self.nextFireTime = self.lastFireTime + self.secondsPerBeat;
     }
 }
 
-- (void)stop {
-    [self.timer invalidate];
+- (void)invalidate {
+    [self.displayLink invalidate];
 }
 
-- (void)tick:(NSTimer *)timer {
-    self.active = YES;
-    [self performSelector:@selector(setActive:) withObject:@(NO) afterDelay:self.leniency];
+- (void)tick:(CADisplayLink *)displayLink {
+    self.active = [self isActiveForTimestamp:displayLink.timestamp];
+    self.lastFireTime = [self fireTimeLessThan:displayLink.timestamp];
+    self.nextFireTime = [self fireTimeGreaterThanOrEqualTo:displayLink.timestamp];
+    NSLog(@"displayLink .timestamp = %f, .duration = %f, active == %d", displayLink.timestamp, displayLink.duration, self.active);
+}
+
+- (BOOL)isActiveForTimestamp:(CFTimeInterval)timestamp {
+    CFTimeInterval leadingDiff = self.nextFireTime - timestamp;
+    CFTimeInterval trailingDiff = timestamp - self.lastFireTime;
+    BOOL leadsWithinLeniency = leadingDiff >= 0 && leadingDiff < self.leniency;
+    BOOL trailsWithinLeniency = trailingDiff >= 0 && trailingDiff < self.leniency;
+    return leadsWithinLeniency || trailsWithinLeniency;
+}
+
+- (CFTimeInterval)fireTimeLessThan:(CFTimeInterval)timestamp {
+    return (floor(timestamp/self.secondsPerBeat) - 1) * self.secondsPerBeat;
+}
+
+- (CFTimeInterval)fireTimeGreaterThanOrEqualTo:(CFTimeInterval)timestamp {
+    return ceil(timestamp/self.secondsPerBeat) * self.secondsPerBeat;
 }
 
 @end
