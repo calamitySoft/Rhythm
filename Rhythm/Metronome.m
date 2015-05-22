@@ -19,13 +19,14 @@
 
 @implementation Metronome
 
-- (instancetype)initWithBPM:(float)bpm leniency:(NSTimeInterval)leniency {
+- (instancetype)initWithBPM:(float)bpm leadingLeniency:(NSTimeInterval)leadingLeniency trailingLeniency:(NSTimeInterval)trailingLeniency {
     self = [super init];
     if (self) {
         _active = NO;
         _bpm = bpm;
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(tick:)];
-        _leniency = leniency;
+        _leadingLeniency = leadingLeniency;
+        _trailingLeniency = trailingLeniency;
         _lastFireTime = 0;
         _nextFireTime = 0;
         _paused = YES;
@@ -62,8 +63,8 @@
 - (BOOL)isActiveForTimestamp:(CFTimeInterval)timestamp {
     CFTimeInterval leadingDiff = self.nextFireTime - timestamp;
     CFTimeInterval trailingDiff = timestamp - self.lastFireTime;
-    BOOL leadsWithinLeniency = leadingDiff >= 0 && leadingDiff < self.leniency;
-    BOOL trailsWithinLeniency = trailingDiff >= 0 && trailingDiff < self.leniency;
+    BOOL leadsWithinLeniency = leadingDiff >= 0 && leadingDiff < self.leadingLeniency;
+    BOOL trailsWithinLeniency = trailingDiff >= 0 && trailingDiff < self.trailingLeniency;
     return leadsWithinLeniency || trailsWithinLeniency;
 }
 
