@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "Metronome.h"
 @import AVFoundation;
 
 @interface ViewController () <UIGestureRecognizerDelegate>
@@ -15,7 +16,7 @@
 @property IBOutlet UILabel *throwLabel;  // paper
 @property IBOutlet UIView *pulseView;
 @property AVAudioPlayer *clickAudioPlayer;
-@property NSTimer *clickTimer;
+@property Metronome *metronome;
 @end
 
 @implementation ViewController
@@ -29,13 +30,27 @@
     return [[AVAudioPlayer alloc] initWithContentsOfURL:clickURL fileTypeHint:AVFileTypeWAVE error:nil];
 }
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.pulseView.backgroundColor = [UIColor clearColor];
     self.pulseView.layer.cornerRadius = CGRectGetWidth(self.pulseView.frame) / 2;
-    self.clickTimer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(click:) userInfo:nil repeats:YES];
     self.clickAudioPlayer = [[self class] clickAudioPlayer];
     [self.clickAudioPlayer prepareToPlay];
+    self.metronome = [[Metronome alloc] initWithBPM:60 leniency:0.2];
+    [self.metronome addObserver:self forKeyPath:NSStringFromSelector(@selector(active)) options:NSKeyValueObservingOptionNew context:0];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.metronome start];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    BOOL active = [change[NSKeyValueChangeNewKey] boolValue];
+    self.pulseView.backgroundColor = active ? [[self class] highlightColor] : nil;
+    [self.clickAudioPlayer play];
 }
 
 #pragma mark - Click
