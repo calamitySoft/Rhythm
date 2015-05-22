@@ -1,15 +1,15 @@
 //
-//  Metronome.m
+//  CALMetronome.m
 //  Rhythm
 //
 //  Created by Logan Moseley on 5/17/15.
 //  Copyright (c) 2015 CalamitySoft. All rights reserved.
 //
 
-#import "Metronome.h"
+#import "CALMetronome.h"
 @import QuartzCore;
 
-@interface Metronome ()
+@interface CALMetronome ()
 @property (readwrite) BOOL active;
 @property CADisplayLink *displayLink;
 @property CFTimeInterval lastFireTime;
@@ -17,7 +17,7 @@
 @property CFTimeInterval secondsPerBeat;
 @end
 
-@implementation Metronome
+@implementation CALMetronome
 
 - (instancetype)initWithBPM:(float)bpm leadingLeniency:(NSTimeInterval)leadingLeniency trailingLeniency:(NSTimeInterval)trailingLeniency {
     self = [super init];

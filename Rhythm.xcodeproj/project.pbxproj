@@ -16,7 +16,7 @@
 		70DFD0D51B08E6A70084175E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70DFD0D31B08E6A70084175E /* LaunchScreen.xib */; };
 		70DFD0E11B08E6A70084175E /* RhythmTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DFD0E01B08E6A70084175E /* RhythmTests.m */; };
 		70F370271B08FBA200273D20 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F370261B08FBA200273D20 /* AVFoundation.framework */; };
-		70F370301B08FEA300273D20 /* Metronome.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F3702F1B08FEA300273D20 /* Metronome.m */; };
+		70F370301B08FEA300273D20 /* CALMetronome.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F3702F1B08FEA300273D20 /* CALMetronome.m */; };
 		70F370321B092E2100273D20 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F370311B092E2100273D20 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -46,8 +46,8 @@
 		70DFD0DF1B08E6A70084175E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		70DFD0E01B08E6A70084175E /* RhythmTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RhythmTests.m; sourceTree = "<group>"; };
 		70F370261B08FBA200273D20 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		70F3702E1B08FEA300273D20 /* Metronome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Metronome.h; sourceTree = "<group>"; };
-		70F3702F1B08FEA300273D20 /* Metronome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Metronome.m; sourceTree = "<group>"; };
+		70F3702E1B08FEA300273D20 /* CALMetronome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALMetronome.h; sourceTree = "<group>"; };
+		70F3702F1B08FEA300273D20 /* CALMetronome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CALMetronome.m; sourceTree = "<group>"; };
 		70F370311B092E2100273D20 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -105,8 +105,8 @@
 			children = (
 				70DFD0C81B08E6A70084175E /* AppDelegate.h */,
 				70DFD0C91B08E6A70084175E /* AppDelegate.m */,
-				70F3702E1B08FEA300273D20 /* Metronome.h */,
-				70F3702F1B08FEA300273D20 /* Metronome.m */,
+				70F3702E1B08FEA300273D20 /* CALMetronome.h */,
+				70F3702F1B08FEA300273D20 /* CALMetronome.m */,
 				70DFD0CB1B08E6A70084175E /* ViewController.h */,
 				70DFD0CC1B08E6A70084175E /* ViewController.m */,
 				70DFD0CE1B08E6A70084175E /* Main.storyboard */,
@@ -244,7 +244,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				70F370301B08FEA300273D20 /* Metronome.m in Sources */,
+				70F370301B08FEA300273D20 /* CALMetronome.m in Sources */,
 				70DFD0CD1B08E6A70084175E /* ViewController.m in Sources */,
 				70DFD0CA1B08E6A70084175E /* AppDelegate.m in Sources */,
 				70DFD0C71B08E6A70084175E /* main.m in Sources */,

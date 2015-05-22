@@ -1,14 +1,14 @@
 //
-//  Metronome.h
+//  CALMetronome.h
 //  Rhythm
 //
 //  Created by Logan Moseley on 5/17/15.
 //  Copyright (c) 2015 CalamitySoft. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
-@interface Metronome : NSObject
+@interface CALMetronome : NSObject
 
 @property (readonly) BOOL active; // KVO this
 @property (readonly) float bpm;
