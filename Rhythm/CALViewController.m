@@ -1,16 +1,16 @@
 //
-//  ViewController.m
+//  CALViewController.m
 //  Rhythm
 //
 //  Created by Logan Moseley on 5/17/15.
 //  Copyright (c) 2015 CalamitySoft. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "CALViewController.h"
 #import "CALMetronome.h"
 @import AVFoundation;
 
-@interface ViewController () <UIGestureRecognizerDelegate>
+@interface CALViewController () <UIGestureRecognizerDelegate>
 @property IBOutlet UILabel *attackLabel; // scissors
 @property IBOutlet UILabel *blockLabel;  // rock
 @property IBOutlet UILabel *throwLabel;  // paper
@@ -19,7 +19,7 @@
 @property CALMetronome *metronome;
 @end
 
-@implementation ViewController
+@implementation CALViewController
 
 + (UIColor *)highlightColor {
     return [UIColor colorWithRed:(54/255.) green:(109/255.) blue:(191/255.) alpha:1];

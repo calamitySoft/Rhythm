@@ -11,7 +11,7 @@
 		70351F7E1B08F15E00D27836 /* Click1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 70351F7D1B08F15E00D27836 /* Click1.wav */; };
 		70DFD0C71B08E6A70084175E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DFD0C61B08E6A70084175E /* main.m */; };
 		70DFD0CA1B08E6A70084175E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DFD0C91B08E6A70084175E /* AppDelegate.m */; };
-		70DFD0CD1B08E6A70084175E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DFD0CC1B08E6A70084175E /* ViewController.m */; };
+		70DFD0CD1B08E6A70084175E /* CALViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DFD0CC1B08E6A70084175E /* CALViewController.m */; };
 		70DFD0D01B08E6A70084175E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70DFD0CE1B08E6A70084175E /* Main.storyboard */; };
 		70DFD0D51B08E6A70084175E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70DFD0D31B08E6A70084175E /* LaunchScreen.xib */; };
 		70DFD0E11B08E6A70084175E /* RhythmTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DFD0E01B08E6A70084175E /* RhythmTests.m */; };
@@ -38,8 +38,8 @@
 		70DFD0C61B08E6A70084175E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		70DFD0C81B08E6A70084175E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		70DFD0C91B08E6A70084175E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		70DFD0CB1B08E6A70084175E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		70DFD0CC1B08E6A70084175E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		70DFD0CB1B08E6A70084175E /* CALViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CALViewController.h; sourceTree = "<group>"; };
+		70DFD0CC1B08E6A70084175E /* CALViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CALViewController.m; sourceTree = "<group>"; };
 		70DFD0CF1B08E6A70084175E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		70DFD0D41B08E6A70084175E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		70DFD0DA1B08E6A70084175E /* RhythmTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RhythmTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,8 +107,8 @@
 				70DFD0C91B08E6A70084175E /* AppDelegate.m */,
 				70F3702E1B08FEA300273D20 /* CALMetronome.h */,
 				70F3702F1B08FEA300273D20 /* CALMetronome.m */,
-				70DFD0CB1B08E6A70084175E /* ViewController.h */,
-				70DFD0CC1B08E6A70084175E /* ViewController.m */,
+				70DFD0CB1B08E6A70084175E /* CALViewController.h */,
+				70DFD0CC1B08E6A70084175E /* CALViewController.m */,
 				70DFD0CE1B08E6A70084175E /* Main.storyboard */,
 				70DFD0D31B08E6A70084175E /* LaunchScreen.xib */,
 				70351F7A1B08F14000D27836 /* Resources */,
@@ -245,7 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70F370301B08FEA300273D20 /* CALMetronome.m in Sources */,
-				70DFD0CD1B08E6A70084175E /* ViewController.m in Sources */,
+				70DFD0CD1B08E6A70084175E /* CALViewController.m in Sources */,
 				70DFD0CA1B08E6A70084175E /* AppDelegate.m in Sources */,
 				70DFD0C71B08E6A70084175E /* main.m in Sources */,
 			);

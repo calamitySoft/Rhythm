@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  CALViewController.h
 //  Rhythm
 //
 //  Created by Logan Moseley on 5/17/15.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface CALViewController : UIViewController
 
 
 @end
