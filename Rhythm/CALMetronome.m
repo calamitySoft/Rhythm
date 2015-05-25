@@ -26,12 +26,11 @@
     if (self) {
         _actionAllowed = NO;
         _bpm = bpm;
-        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(tick:)];
         _leadingLeniency = leadingLeniency;
         _trailingLeniency = trailingLeniency;
         _lastFireTime = 0;
         _nextFireTime = 0;
-        _paused = YES;
+        _paused = NO;
         CFTimeInterval beatsPerSecond = self.bpm / 60.;
         _secondsPerBeat = 1. / beatsPerSecond;
         _selectorsByListener = [NSMapTable weakToStrongObjectsMapTable];
@@ -40,24 +39,35 @@
 }
 
 - (void)dealloc {
-    [self invalidate];
+    [self stop];
+}
+
+#pragma mark - State
+
+- (void)start {
+    NSAssert(!self.displayLink, @"%s may only be called once.", __func__);
+    if (self.displayLink) {
+        return;
+    }
+    
+    self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(tick:)];
+    [self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    self.startTime = CACurrentMediaTime();
+    self.lastFireTime = CACurrentMediaTime();
+    self.nextFireTime = self.lastFireTime + self.secondsPerBeat;
+}
+
+- (void)setPaused:(BOOL)paused {
+    _paused = paused;
+    self.displayLink.paused = paused;
+}
+
+- (void)stop {
+    [self.displayLink invalidate];
+    self.displayLink = nil;
 }
 
 #pragma mark - Display Link
-
-- (void)start {
-    if (self.paused) {
-        _paused = NO;
-        [self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-        self.startTime = CACurrentMediaTime();
-        self.lastFireTime = CACurrentMediaTime();
-        self.nextFireTime = self.lastFireTime + self.secondsPerBeat;
-    }
-}
-
-- (void)invalidate {
-    [self.displayLink invalidate];
-}
 
 - (void)tick:(CADisplayLink *)displayLink {
     self.actionAllowed = [self isActiveForTimestamp:displayLink.timestamp];
@@ -65,13 +75,12 @@
     if (shouldBeat) {
         self.lastFireTime = [self beatTimestampPriorToTimestamp:displayLink.timestamp];
         self.nextFireTime = self.lastFireTime + self.secondsPerBeat;
-        NSLog(@"beat: %.5f", displayLink.timestamp);
         for (NSObject *listener in self.selectorsByListener) {
             [[self.selectorsByListener objectForKey:listener] invoke];
         }
     }
 //    NSLog(@"displayLink.timestamp = %.4f, last = %.4f, next = %.4f", displayLink.timestamp, self.lastFireTime, self.nextFireTime);
-//    NSLog(@"displayLink .timestamp = %f, .duration = %f, active == %d", displayLink.timestamp, displayLink.duration, self.actionAllowed);
+//    NSLog(@"displayLink .timestamp = %f, .duration = %f, .frameInterval == %ld", displayLink.timestamp, displayLink.duration, (long)displayLink.frameInterval);
 }
 
 - (BOOL)isActiveForTimestamp:(CFTimeInterval)timestamp {

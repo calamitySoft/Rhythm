@@ -14,7 +14,7 @@
 @property (readonly) float bpm;
 @property (readonly) NSTimeInterval leadingLeniency; // length of time before a beat that actionAllowed == YES
 @property (readonly) NSTimeInterval trailingLeniency; // length of time after a beat that actionAllowed == YES
-@property (readonly, getter=isPaused) BOOL paused;
+@property (nonatomic, getter=isPaused) BOOL paused;
 
 - (instancetype)initWithBPM:(float)bpm leadingLeniency:(NSTimeInterval)leadingLeniency trailingLeniency:(NSTimeInterval)trailingLeniency NS_DESIGNATED_INITIALIZER;
 
@@ -22,6 +22,6 @@
 - (void)removeBeatListener:(NSObject *)listener;
 
 - (void)start; // not thread-safe
-- (void)invalidate;
+- (void)stop;
 
 @end

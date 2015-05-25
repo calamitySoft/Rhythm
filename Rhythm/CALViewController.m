@@ -10,6 +10,9 @@
 #import "CALMetronome.h"
 @import AVFoundation;
 
+static void *CALActionAllowedContext = &CALActionAllowedContext;
+static void *CALIsPausedContext = &CALIsPausedContext;
+
 @interface CALViewController () <UIGestureRecognizerDelegate>
 @property IBOutlet UILabel *attackLabel; // scissors
 @property IBOutlet UILabel *blockLabel;  // rock
@@ -39,25 +42,39 @@
     self.clickAudioPlayer = [[self class] clickAudioPlayer];
     [self.clickAudioPlayer prepareToPlay];
     self.metronome = [[CALMetronome alloc] initWithBPM:60 leadingLeniency:0.25 trailingLeniency:0.25];
-    [self.metronome addObserver:self forKeyPath:NSStringFromSelector(@selector(actionAllowed)) options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:0];
+    [self.metronome addObserver:self forKeyPath:NSStringFromSelector(@selector(actionAllowed)) options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:CALActionAllowedContext];
+    [self.metronome addObserver:self forKeyPath:@"paused" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:CALIsPausedContext];
     [self.metronome addBeatListener:self selector:@selector(beat)];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.metronome start];
+    
+    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(pause) userInfo:nil repeats:YES];
+}
+
+- (void)pause {
+    static BOOL willPause = YES;
+    self.metronome.paused = willPause;
+    willPause = !willPause;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    BOOL actionAllowed = [change[NSKeyValueChangeNewKey] boolValue];
-    self.pulseView.backgroundColor = actionAllowed ? [[self class] highlightColor] : nil;
+    if (context == CALActionAllowedContext) {
+        BOOL actionAllowed = [change[NSKeyValueChangeNewKey] boolValue];
+        self.pulseView.backgroundColor = actionAllowed ? [[self class] highlightColor] : nil;
+    }
+    else if (context == CALIsPausedContext) {
+        NSLog(@"metronome isPaused: %@", [change[NSKeyValueChangeNewKey] boolValue] ? @"YES" : @"NO");
+    }
 }
 
 #pragma mark - Click
 
 - (void)beat {
     static NSInteger beat = 0;
-//    NSLog(@"beat %ld", (long)beat++);
+    NSLog(@"beat %ld", (long)beat++);
     [self.clickAudioPlayer play];
 }
 
