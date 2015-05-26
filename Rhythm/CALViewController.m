@@ -8,6 +8,7 @@
 
 #import "CALViewController.h"
 #import "CALMetronome.h"
+#import "CALBeatPulseView.h"
 @import AVFoundation;
 
 static void *CALIsPausedContext = &CALIsPausedContext;
@@ -17,7 +18,7 @@ static void *CALBeatRelationshipContext = &CALBeatRelationshipContext;
 @property IBOutlet UILabel *attackLabel; // scissors
 @property IBOutlet UILabel *blockLabel;  // rock
 @property IBOutlet UILabel *throwLabel;  // paper
-@property IBOutlet UIView *pulseView;
+@property IBOutlet CALBeatPulseView *pulseView;
 @property AVAudioPlayer *clickAudioPlayer;
 @property CALMetronome *metronome;
 @end
