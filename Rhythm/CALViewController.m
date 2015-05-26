@@ -65,15 +65,30 @@ static void *CALBeatRelationshipContext = &CALBeatRelationshipContext;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (context == CALActionAllowedContext) {
         BOOL actionAllowed = [change[NSKeyValueChangeNewKey] boolValue];
-        self.pulseView.backgroundColor = actionAllowed ? [[self class] highlightColor] : nil;
         NSLog(@"actionAllowed did change; metronome.actionAllowed == %@", actionAllowed ? @"YES" : @"NO");
     }
     else if (context == CALIsPausedContext) {
         NSLog(@"isPaused did change; metronome.isPaused == %@", [change[NSKeyValueChangeNewKey] boolValue] ? @"YES" : @"NO");
     }
     else if (context == CALBeatRelationshipContext) {
-        NSLog(@"beatRelationship did change; metronome.beatRelationship == %ld", (long)[change[NSKeyValueChangeNewKey] integerValue]);
+        CALMetronomeBeatRelationship beatRelationship = (CALMetronomeBeatRelationship)[change[NSKeyValueChangeNewKey] integerValue];
+        self.pulseView.backgroundColor = pulseColorFromBeatRelationship(beatRelationship);
+        NSLog(@"beatRelationship did change; metronome.beatRelationship == %@", NSStringFromCALMetronomeBeatRelationship(beatRelationship));
     }
+}
+
+static UIColor *pulseColorFromBeatRelationship(CALMetronomeBeatRelationship beatRelationship) {
+    switch (beatRelationship) {
+        case CALMetronomeBeatRelationshipLeading:
+            return [UIColor blueColor];
+        case CALMetronomeBeatRelationshipOn:
+            return [UIColor greenColor];
+        case CALMetronomeBeatRelationshipTrailing:
+            return [UIColor yellowColor];
+        case CALMetronomeBeatRelationshipOff:
+            return [UIColor redColor];
+    }
+    return [UIColor blackColor];
 }
 
 #pragma mark - Click

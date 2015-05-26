@@ -9,17 +9,6 @@
 #import "CALMetronome.h"
 @import QuartzCore;
 
-static inline BOOL CALActionAllowedFromBeatRelationship(CALMetronomeBeatRelationship beatRelationship) {
-    switch (beatRelationship) {
-        case CALMetronomeBeatRelationshipLeading:
-        case CALMetronomeBeatRelationshipOn:
-        case CALMetronomeBeatRelationshipTrailing:
-            return YES;
-        case CALMetronomeBeatRelationshipOff:
-            return NO;
-    }
-    return NO;
-}
 
 @interface CALMetronome ()
 @property (readwrite) BOOL actionAllowed;
