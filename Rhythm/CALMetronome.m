@@ -12,9 +12,9 @@
 @interface CALMetronome ()
 @property (readwrite) BOOL actionAllowed;
 @property CADisplayLink *displayLink;
+@property CFTimeInterval elapsedTime;
 @property CFTimeInterval startTime;
 @property CFTimeInterval lastFireTime;
-@property CFTimeInterval nextFireTime;
 @property CFTimeInterval secondsPerBeat;
 @property NSMapTable *selectorsByListener;
 @end
@@ -28,8 +28,8 @@
         _bpm = bpm;
         _leadingLeniency = leadingLeniency;
         _trailingLeniency = trailingLeniency;
+        _elapsedTime = 0;
         _lastFireTime = 0;
-        _nextFireTime = 0;
         _paused = NO;
         CFTimeInterval beatsPerSecond = self.bpm / 60.;
         _secondsPerBeat = 1. / beatsPerSecond;
@@ -54,7 +54,6 @@
     [self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     self.startTime = CACurrentMediaTime();
     self.lastFireTime = CACurrentMediaTime();
-    self.nextFireTime = self.lastFireTime + self.secondsPerBeat;
 }
 
 - (void)setPaused:(BOOL)paused {
@@ -70,38 +69,49 @@
 #pragma mark - Display Link
 
 - (void)tick:(CADisplayLink *)displayLink {
-    self.actionAllowed = [self isActiveForTimestamp:displayLink.timestamp];
-    BOOL shouldBeat = [self hasCurrentTimeOutgrownBeatPeriod:displayLink.timestamp];
+    CFTimeInterval elapsedSinceLastTick = displayLink.duration * displayLink.frameInterval;
+    self.elapsedTime += elapsedSinceLastTick;
+    
+    BOOL actionAllowed = [self isActionAllowedForElapsedTime:self.elapsedTime];
+    if (self.actionAllowed != actionAllowed) {
+        self.actionAllowed = actionAllowed;
+    }
+    
+    CFTimeInterval priorBeatTime = [self beatElapsedTimePriorToElapsedTime:self.elapsedTime];
+    BOOL shouldBeat = priorBeatTime != self.lastFireTime;
     if (shouldBeat) {
-        self.lastFireTime = [self beatTimestampPriorToTimestamp:displayLink.timestamp];
-        self.nextFireTime = self.lastFireTime + self.secondsPerBeat;
+        self.lastFireTime = priorBeatTime;
         for (NSObject *listener in self.selectorsByListener) {
             [[self.selectorsByListener objectForKey:listener] invoke];
         }
     }
-//    NSLog(@"displayLink.timestamp = %.4f, last = %.4f, next = %.4f", displayLink.timestamp, self.lastFireTime, self.nextFireTime);
+    
+//    NSLog(@"displayLink.timestamp = %.4f, last = %.4f", displayLink.timestamp, self.lastFireTime);
 //    NSLog(@"displayLink .timestamp = %f, .duration = %f, .frameInterval == %ld", displayLink.timestamp, displayLink.duration, (long)displayLink.frameInterval);
 }
 
-- (BOOL)isActiveForTimestamp:(CFTimeInterval)timestamp {
-    CFTimeInterval leadingDiff = self.nextFireTime - timestamp;
-    CFTimeInterval trailingDiff = timestamp - self.lastFireTime;
-    BOOL leadsWithinLeniency = leadingDiff >= 0 && leadingDiff < self.leadingLeniency;
+- (BOOL)isActionAllowedForElapsedTime:(CFTimeInterval)elapsedTime {
+    CFTimeInterval priorBeatTime = [self beatElapsedTimePriorToElapsedTime:elapsedTime];
+    CFTimeInterval subsequentBeatTime = [self beatElapsedTimeSubsequentToElapsedTime:elapsedTime];
+    CFTimeInterval trailingDiff = elapsedTime - priorBeatTime;
+    CFTimeInterval leadingDiff = subsequentBeatTime - elapsedTime;
     BOOL trailsWithinLeniency = trailingDiff >= 0 && trailingDiff < self.trailingLeniency;
-    return leadsWithinLeniency || trailsWithinLeniency;
+    BOOL leadsWithinLeniency = leadingDiff >= 0 && leadingDiff < self.leadingLeniency;
+    return trailsWithinLeniency || leadsWithinLeniency;
 }
 
-- (CFTimeInterval)beatTimestampPriorToTimestamp:(CFTimeInterval)timestamp {
-    CFTimeInterval timeSinceStart = timestamp - self.startTime;
-    CFTimeInterval beatsSinceStart = timeSinceStart / self.secondsPerBeat;
-    CFTimeInterval wholeBeatsSinceStart = floor( beatsSinceStart );
-    CFTimeInterval beatSecondsSinceStart = wholeBeatsSinceStart * self.secondsPerBeat;
-    return self.startTime + beatSecondsSinceStart;
+- (CFTimeInterval)beatElapsedTimePriorToElapsedTime:(CFTimeInterval)elapsedTime {
+    CFTimeInterval elapsedBeats = self.elapsedTime / self.secondsPerBeat;
+    CFTimeInterval floorElapsedBeats = floor( elapsedBeats );
+    CFTimeInterval fullElapsedBeatSeconds = floorElapsedBeats * self.secondsPerBeat;
+    return fullElapsedBeatSeconds;
 }
 
-- (BOOL)hasCurrentTimeOutgrownBeatPeriod:(CFTimeInterval)timestamp {
-    CFTimeInterval timeIntervalSinceLastBeat = timestamp - self.lastFireTime;
-    return timeIntervalSinceLastBeat > self.secondsPerBeat;
+- (CFTimeInterval)beatElapsedTimeSubsequentToElapsedTime:(CFTimeInterval)elapsedTime {
+    CFTimeInterval elapsedBeats = self.elapsedTime / self.secondsPerBeat;
+    CFTimeInterval ceilElapsedBeats = ceil( elapsedBeats );
+    CFTimeInterval fullElapsedBeatSecondsPlus1 = ceilElapsedBeats * self.secondsPerBeat;
+    return fullElapsedBeatSecondsPlus1;
 }
 
 #pragma mark - Listeners

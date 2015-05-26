@@ -41,7 +41,7 @@ static void *CALIsPausedContext = &CALIsPausedContext;
     self.pulseView.layer.cornerRadius = CGRectGetWidth(self.pulseView.frame) / 2;
     self.clickAudioPlayer = [[self class] clickAudioPlayer];
     [self.clickAudioPlayer prepareToPlay];
-    self.metronome = [[CALMetronome alloc] initWithBPM:60 leadingLeniency:0.25 trailingLeniency:0.25];
+    self.metronome = [[CALMetronome alloc] initWithBPM:30 leadingLeniency:0.2 trailingLeniency:0.5];
     [self.metronome addObserver:self forKeyPath:NSStringFromSelector(@selector(actionAllowed)) options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:CALActionAllowedContext];
     [self.metronome addObserver:self forKeyPath:@"paused" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:CALIsPausedContext];
     [self.metronome addBeatListener:self selector:@selector(beat)];
@@ -51,7 +51,7 @@ static void *CALIsPausedContext = &CALIsPausedContext;
     [super viewDidAppear:animated];
     [self.metronome start];
     
-    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(pause) userInfo:nil repeats:YES];
+//    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(pause) userInfo:nil repeats:YES];
 }
 
 - (void)pause {
@@ -64,9 +64,10 @@ static void *CALIsPausedContext = &CALIsPausedContext;
     if (context == CALActionAllowedContext) {
         BOOL actionAllowed = [change[NSKeyValueChangeNewKey] boolValue];
         self.pulseView.backgroundColor = actionAllowed ? [[self class] highlightColor] : nil;
+//        NSLog(@"actionAllowed did change; metronome.actionAllowed == %@", actionAllowed ? @"YES" : @"NO");
     }
     else if (context == CALIsPausedContext) {
-        NSLog(@"metronome isPaused: %@", [change[NSKeyValueChangeNewKey] boolValue] ? @"YES" : @"NO");
+//        NSLog(@"isPaused did change; metronome.isPaused == %@", [change[NSKeyValueChangeNewKey] boolValue] ? @"YES" : @"NO");
     }
 }
 
