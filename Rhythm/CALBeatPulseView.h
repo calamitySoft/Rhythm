@@ -7,7 +7,10 @@
 //
 
 @import UIKit;
+#import "CALMetronomeBeatRelationship.h"
 
 @interface CALBeatPulseView : UIView
+
+@property CALMetronomeBeatRelationship beatRelationship;
 
 @end
