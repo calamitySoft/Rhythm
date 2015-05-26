@@ -12,6 +12,7 @@
 
 static void *CALActionAllowedContext = &CALActionAllowedContext;
 static void *CALIsPausedContext = &CALIsPausedContext;
+static void *CALBeatRelationshipContext = &CALBeatRelationshipContext;
 
 @interface CALViewController () <UIGestureRecognizerDelegate>
 @property IBOutlet UILabel *attackLabel; // scissors
@@ -44,6 +45,7 @@ static void *CALIsPausedContext = &CALIsPausedContext;
     self.metronome = [[CALMetronome alloc] initWithBPM:30 leadingLeniency:0.2 trailingLeniency:0.5];
     [self.metronome addObserver:self forKeyPath:NSStringFromSelector(@selector(actionAllowed)) options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:CALActionAllowedContext];
     [self.metronome addObserver:self forKeyPath:@"paused" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:CALIsPausedContext];
+    [self.metronome addObserver:self forKeyPath:NSStringFromSelector(@selector(beatRelationship)) options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:CALBeatRelationshipContext];
     [self.metronome addBeatListener:self selector:@selector(beat)];
 }
 
@@ -68,6 +70,9 @@ static void *CALIsPausedContext = &CALIsPausedContext;
     }
     else if (context == CALIsPausedContext) {
         NSLog(@"isPaused did change; metronome.isPaused == %@", [change[NSKeyValueChangeNewKey] boolValue] ? @"YES" : @"NO");
+    }
+    else if (context == CALBeatRelationshipContext) {
+        NSLog(@"beatRelationship did change; metronome.beatRelationship == %ld", (long)[change[NSKeyValueChangeNewKey] integerValue]);
     }
 }
 
