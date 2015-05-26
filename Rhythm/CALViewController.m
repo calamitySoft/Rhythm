@@ -10,7 +10,6 @@
 #import "CALMetronome.h"
 @import AVFoundation;
 
-static void *CALActionAllowedContext = &CALActionAllowedContext;
 static void *CALIsPausedContext = &CALIsPausedContext;
 static void *CALBeatRelationshipContext = &CALBeatRelationshipContext;
 
@@ -43,7 +42,6 @@ static void *CALBeatRelationshipContext = &CALBeatRelationshipContext;
     self.clickAudioPlayer = [[self class] clickAudioPlayer];
     [self.clickAudioPlayer prepareToPlay];
     self.metronome = [[CALMetronome alloc] initWithBPM:30 leadingLeniency:0.2 trailingLeniency:0.5];
-    [self.metronome addObserver:self forKeyPath:NSStringFromSelector(@selector(actionAllowed)) options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:CALActionAllowedContext];
     [self.metronome addObserver:self forKeyPath:@"paused" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:CALIsPausedContext];
     [self.metronome addObserver:self forKeyPath:NSStringFromSelector(@selector(beatRelationship)) options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:CALBeatRelationshipContext];
     [self.metronome addBeatListener:self selector:@selector(beat)];
@@ -52,8 +50,6 @@ static void *CALBeatRelationshipContext = &CALBeatRelationshipContext;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.metronome start];
-    
-//    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(pause) userInfo:nil repeats:YES];
 }
 
 - (void)pause {
@@ -63,11 +59,7 @@ static void *CALBeatRelationshipContext = &CALBeatRelationshipContext;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (context == CALActionAllowedContext) {
-        BOOL actionAllowed = [change[NSKeyValueChangeNewKey] boolValue];
-        NSLog(@"actionAllowed did change; metronome.actionAllowed == %@", actionAllowed ? @"YES" : @"NO");
-    }
-    else if (context == CALIsPausedContext) {
+    if (context == CALIsPausedContext) {
         NSLog(@"isPaused did change; metronome.isPaused == %@", [change[NSKeyValueChangeNewKey] boolValue] ? @"YES" : @"NO");
     }
     else if (context == CALBeatRelationshipContext) {
