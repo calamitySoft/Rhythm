@@ -8,9 +8,17 @@
 
 @import Foundation;
 
+typedef NS_ENUM(NSInteger, CALMetronomeBeatRelationship) {
+    CALMetronomeBeatRelationshipLeading     = -1,
+    CALMetronomeBeatRelationshipOn          = 0,
+    CALMetronomeBeatRelationshipTrailing    = 1,
+    CALMetronomeBeatRelationshipOff         = NSIntegerMax,
+};
+
 @interface CALMetronome : NSObject
 
 @property (readonly) BOOL actionAllowed; // KVO this
+@property (readonly) CALMetronomeBeatRelationship beatRelationship;
 @property (readonly) float bpm;
 @property (readonly) NSTimeInterval leadingLeniency; // length of time before a beat that actionAllowed == YES
 @property (readonly) NSTimeInterval trailingLeniency; // length of time after a beat that actionAllowed == YES

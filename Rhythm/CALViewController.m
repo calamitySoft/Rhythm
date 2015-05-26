@@ -64,10 +64,10 @@ static void *CALIsPausedContext = &CALIsPausedContext;
     if (context == CALActionAllowedContext) {
         BOOL actionAllowed = [change[NSKeyValueChangeNewKey] boolValue];
         self.pulseView.backgroundColor = actionAllowed ? [[self class] highlightColor] : nil;
-//        NSLog(@"actionAllowed did change; metronome.actionAllowed == %@", actionAllowed ? @"YES" : @"NO");
+        NSLog(@"actionAllowed did change; metronome.actionAllowed == %@", actionAllowed ? @"YES" : @"NO");
     }
     else if (context == CALIsPausedContext) {
-//        NSLog(@"isPaused did change; metronome.isPaused == %@", [change[NSKeyValueChangeNewKey] boolValue] ? @"YES" : @"NO");
+        NSLog(@"isPaused did change; metronome.isPaused == %@", [change[NSKeyValueChangeNewKey] boolValue] ? @"YES" : @"NO");
     }
 }
 

@@ -9,8 +9,21 @@
 #import "CALMetronome.h"
 @import QuartzCore;
 
+static inline BOOL CALActionAllowedFromBeatRelationship(CALMetronomeBeatRelationship beatRelationship) {
+    switch (beatRelationship) {
+        case CALMetronomeBeatRelationshipLeading:
+        case CALMetronomeBeatRelationshipOn:
+        case CALMetronomeBeatRelationshipTrailing:
+            return YES;
+        case CALMetronomeBeatRelationshipOff:
+            return NO;
+    }
+    return NO;
+}
+
 @interface CALMetronome ()
 @property (readwrite) BOOL actionAllowed;
+@property (readwrite) CALMetronomeBeatRelationship beatRelationship;
 @property CADisplayLink *displayLink;
 @property CFTimeInterval elapsedTime;
 @property CFTimeInterval startTime;
@@ -25,6 +38,7 @@
     self = [super init];
     if (self) {
         _actionAllowed = NO;
+        _beatRelationship = CALMetronomeBeatRelationshipOff;
         _bpm = bpm;
         _leadingLeniency = leadingLeniency;
         _trailingLeniency = trailingLeniency;
@@ -72,7 +86,12 @@
     CFTimeInterval elapsedSinceLastTick = displayLink.duration * displayLink.frameInterval;
     self.elapsedTime += elapsedSinceLastTick;
     
-    BOOL actionAllowed = [self isActionAllowedForElapsedTime:self.elapsedTime];
+    CALMetronomeBeatRelationship beatRelationship = [self beatRelationshipForElapsedTime:self.elapsedTime];
+    if (self.beatRelationship != beatRelationship) {
+        self.beatRelationship = beatRelationship;
+    }
+    
+    BOOL actionAllowed = CALActionAllowedFromBeatRelationship(beatRelationship);
     if (self.actionAllowed != actionAllowed) {
         self.actionAllowed = actionAllowed;
     }
@@ -88,6 +107,29 @@
     
 //    NSLog(@"displayLink.timestamp = %.4f, last = %.4f", displayLink.timestamp, self.lastFireTime);
 //    NSLog(@"displayLink .timestamp = %f, .duration = %f, .frameInterval == %ld", displayLink.timestamp, displayLink.duration, (long)displayLink.frameInterval);
+}
+
+- (CALMetronomeBeatRelationship)beatRelationshipForElapsedTime:(CFTimeInterval)elapsedTime {
+    CFTimeInterval priorBeatTime = [self beatElapsedTimePriorToElapsedTime:elapsedTime];
+    CFTimeInterval subsequentBeatTime = [self beatElapsedTimeSubsequentToElapsedTime:elapsedTime];
+    CFTimeInterval trailingDiff = elapsedTime - priorBeatTime;
+    CFTimeInterval leadingDiff = subsequentBeatTime - elapsedTime;
+    BOOL preciselyOnBeat = trailingDiff == 0 || leadingDiff == 0;
+    BOOL trailsWithinLeniency = trailingDiff >= 0 && trailingDiff < self.trailingLeniency;
+    BOOL leadsWithinLeniency = leadingDiff >= 0 && leadingDiff < self.leadingLeniency;
+    
+    if (preciselyOnBeat) {
+        return CALMetronomeBeatRelationshipOn;
+    }
+    else if (leadsWithinLeniency) {
+        return CALMetronomeBeatRelationshipLeading;
+    }
+    else if (trailsWithinLeniency) {
+        return CALMetronomeBeatRelationshipTrailing;
+    }
+    else {
+        return CALMetronomeBeatRelationshipOff;
+    }
 }
 
 - (BOOL)isActionAllowedForElapsedTime:(CFTimeInterval)elapsedTime {
