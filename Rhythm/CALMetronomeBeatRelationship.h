@@ -15,6 +15,6 @@ typedef NS_ENUM(NSInteger, CALMetronomeBeatRelationship) {
     CALMetronomeBeatRelationshipOff         = NSIntegerMax,
 };
 
-extern inline BOOL CALActionAllowedFromBeatRelationship(CALMetronomeBeatRelationship beatRelationship);
+extern BOOL CALActionAllowedFromBeatRelationship(CALMetronomeBeatRelationship beatRelationship);
 
-extern inline NSString *NSStringFromCALMetronomeBeatRelationship(CALMetronomeBeatRelationship beatRelationship);
+extern NSString *NSStringFromCALMetronomeBeatRelationship(CALMetronomeBeatRelationship beatRelationship);

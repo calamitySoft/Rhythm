@@ -64,23 +64,48 @@ static void *CALBeatRelationshipContext = &CALBeatRelationshipContext;
     }
     else if (context == CALBeatRelationshipContext) {
         CALMetronomeBeatRelationship beatRelationship = (CALMetronomeBeatRelationship)[change[NSKeyValueChangeNewKey] integerValue];
-        self.pulseView.backgroundColor = pulseColorFromBeatRelationship(beatRelationship);
+        self.pulseView.backgroundColor = pulseFillColorFromBeatRelationship(beatRelationship);
+        self.pulseView.layer.borderColor = pulseStrokeColorFromBeatRelationship(beatRelationship).CGColor;
+        self.pulseView.layer.borderWidth = pulseStrokeWidthFromBeatRelationship(beatRelationship);
         NSLog(@"beatRelationship did change; metronome.beatRelationship == %@", NSStringFromCALMetronomeBeatRelationship(beatRelationship));
     }
 }
 
-static UIColor *pulseColorFromBeatRelationship(CALMetronomeBeatRelationship beatRelationship) {
+static UIColor *pulseFillColorFromBeatRelationship(CALMetronomeBeatRelationship beatRelationship) {
     switch (beatRelationship) {
         case CALMetronomeBeatRelationshipLeading:
             return [UIColor blueColor];
         case CALMetronomeBeatRelationshipOn:
-            return [UIColor greenColor];
-        case CALMetronomeBeatRelationshipTrailing:
             return [UIColor yellowColor];
+        case CALMetronomeBeatRelationshipTrailing:
+            return [UIColor magentaColor];
+        case CALMetronomeBeatRelationshipOff:
+            return nil;
+    }
+    return [UIColor blackColor];
+}
+
+static UIColor *pulseStrokeColorFromBeatRelationship(CALMetronomeBeatRelationship beatRelationship) {
+    switch (beatRelationship) {
+        case CALMetronomeBeatRelationshipLeading:
+        case CALMetronomeBeatRelationshipOn:
+        case CALMetronomeBeatRelationshipTrailing:
+            return [UIColor greenColor];
         case CALMetronomeBeatRelationshipOff:
             return [UIColor redColor];
     }
     return [UIColor blackColor];
+}
+
+static CGFloat pulseStrokeWidthFromBeatRelationship(CALMetronomeBeatRelationship beatRelationship) {
+    switch (beatRelationship) {
+        case CALMetronomeBeatRelationshipLeading:
+        case CALMetronomeBeatRelationshipOn:
+        case CALMetronomeBeatRelationshipTrailing:
+        case CALMetronomeBeatRelationshipOff:
+            return 3;
+    }
+    return 3;
 }
 
 #pragma mark - Click
