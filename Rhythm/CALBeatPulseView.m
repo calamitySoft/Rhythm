@@ -8,7 +8,30 @@
 
 #import "CALBeatPulseView.h"
 
-static UIColor *pulseFillColorFromBeatRelationship(CALMetronomeBeatRelationship beatRelationship) {
+extern const struct CALBeatPulseStyleFunctions {
+    UIColor *(*fillColorFromBeatRelationship)(CALMetronomeBeatRelationship beatRelationship);
+    UIColor *(*strokeColorFromBeatRelationship)(CALMetronomeBeatRelationship beatRelationship);
+    CGFloat  (*strokeWidthFromBeatRelationship)(CALMetronomeBeatRelationship beatRelationship);
+} CALBeatPulseStyle;
+
+@implementation CALBeatPulseView
+
+@synthesize beatRelationship = _beatRelationship;
+
+- (CALMetronomeBeatRelationship)beatRelationship {
+    return _beatRelationship;
+}
+
+- (void)setBeatRelationship:(CALMetronomeBeatRelationship)beatRelationship {
+    _beatRelationship = beatRelationship;
+    self.backgroundColor = CALBeatPulseStyle.fillColorFromBeatRelationship(beatRelationship);
+    self.layer.borderColor = CALBeatPulseStyle.strokeColorFromBeatRelationship(beatRelationship).CGColor;
+    self.layer.borderWidth = CALBeatPulseStyle.strokeWidthFromBeatRelationship(beatRelationship);
+}
+
+@end
+
+static UIColor *fillColorFromBeatRelationship(CALMetronomeBeatRelationship beatRelationship) {
     switch (beatRelationship) {
         case CALMetronomeBeatRelationshipLeading:
             return [UIColor blueColor];
@@ -22,7 +45,7 @@ static UIColor *pulseFillColorFromBeatRelationship(CALMetronomeBeatRelationship 
     return [UIColor blackColor];
 }
 
-static UIColor *pulseStrokeColorFromBeatRelationship(CALMetronomeBeatRelationship beatRelationship) {
+static UIColor *strokeColorFromBeatRelationship(CALMetronomeBeatRelationship beatRelationship) {
     switch (beatRelationship) {
         case CALMetronomeBeatRelationshipLeading:
         case CALMetronomeBeatRelationshipOn:
@@ -34,7 +57,7 @@ static UIColor *pulseStrokeColorFromBeatRelationship(CALMetronomeBeatRelationshi
     return [UIColor blackColor];
 }
 
-static CGFloat pulseStrokeWidthFromBeatRelationship(CALMetronomeBeatRelationship beatRelationship) {
+static CGFloat strokeWidthFromBeatRelationship(CALMetronomeBeatRelationship beatRelationship) {
     switch (beatRelationship) {
         case CALMetronomeBeatRelationshipLeading:
         case CALMetronomeBeatRelationshipOn:
@@ -45,20 +68,8 @@ static CGFloat pulseStrokeWidthFromBeatRelationship(CALMetronomeBeatRelationship
     return 3;
 }
 
-@implementation CALBeatPulseView
-
-@synthesize beatRelationship = _beatRelationship;
-
-- (CALMetronomeBeatRelationship)beatRelationship {
-    return _beatRelationship;
-}
-
-- (void)setBeatRelationship:(CALMetronomeBeatRelationship)beatRelationship {
-    _beatRelationship = beatRelationship;
-    self.backgroundColor = pulseFillColorFromBeatRelationship(beatRelationship);
-    self.layer.borderColor = pulseStrokeColorFromBeatRelationship(beatRelationship).CGColor;
-    self.layer.borderWidth = pulseStrokeWidthFromBeatRelationship(beatRelationship);
-
-}
-
-@end
+const struct CALBeatPulseStyleFunctions CALBeatPulseStyle = {
+    .fillColorFromBeatRelationship = fillColorFromBeatRelationship,
+    .strokeColorFromBeatRelationship = strokeColorFromBeatRelationship,
+    .strokeWidthFromBeatRelationship = strokeWidthFromBeatRelationship
+};
